@@ -8,4 +8,10 @@ perf: perf_kernels.py perf.c aarch64.h
 	python3 perf_kernels.py
 	gcc -O2 -g -o perf perf.c perf_kernels.c
 
-.PHONY: test
+amx_intrinsics_v1_test: amx_intrinsics_v1_test.c amx_intrinsics.h amx_backend_aarch64.h aarch64.h
+	gcc -O2 -g -o amx_intrinsics_v1_test amx_intrinsics_v1_test.c -lm
+
+test_intrinsics_v1: amx_intrinsics_v1_test
+	./amx_intrinsics_v1_test
+
+.PHONY: test test_intrinsics_v1
