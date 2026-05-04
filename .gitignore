@@ -4,3 +4,5 @@ amx_intrinsics_v1_test
 amx_intrinsics_v1_test.dSYM
 perf
 perf.dSYM
+perf_kernels.c
+build/
