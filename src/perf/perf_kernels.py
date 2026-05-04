@@ -1,4 +1,6 @@
-f = open("perf_kernels.c", "w")
+import sys
+out = sys.argv[1] if len(sys.argv) > 1 else "perf_kernels.c"
+f = open(out, "w")
 f.write('#include <stdint.h>\n')
 ops = [10, 12, 14, 15, 18, 19, 20, 21]
 ops.sort()

@@ -1,23 +1,42 @@
 BUILD_DIR := build
 
+CFLAGS := -O2 -g -Isrc/headers
+
 # --- test ---
 test: $(BUILD_DIR)/a.out
 	$(BUILD_DIR)/a.out
 
-$(BUILD_DIR)/a.out: test.c emulate.h aarch64.h ldst.c extr.c fma.c fms.c genlut.c mac16.c matfp.c matint.c vecfp.c vecint.c | $(BUILD_DIR)
-	gcc -O2 -g -o $@ test.c ldst.c extr.c fma.c fms.c genlut.c mac16.c matfp.c matint.c vecfp.c vecint.c
+$(BUILD_DIR)/a.out: src/test/test.c \
+		src/emulate/ldst.c src/emulate/extr.c \
+		src/emulate/fma.c src/emulate/fms.c \
+		src/emulate/genlut.c src/emulate/mac16.c \
+		src/emulate/matfp.c src/emulate/matint.c \
+		src/emulate/vecfp.c src/emulate/vecint.c \
+		src/headers/emulate.h src/headers/aarch64.h \
+		| $(BUILD_DIR)
+	gcc $(CFLAGS) -o $@ \
+		src/test/test.c \
+		src/emulate/ldst.c src/emulate/extr.c \
+		src/emulate/fma.c src/emulate/fms.c \
+		src/emulate/genlut.c src/emulate/mac16.c \
+		src/emulate/matfp.c src/emulate/matint.c \
+		src/emulate/vecfp.c src/emulate/vecint.c
 
 # --- perf ---
 perf: $(BUILD_DIR)/perf
-	python3 perf_kernels.py
-	gcc -O2 -g -o $(BUILD_DIR)/perf perf.c perf_kernels.c
 
-$(BUILD_DIR)/perf: perf.c perf_kernels.c aarch64.h | $(BUILD_DIR)
-	gcc -O2 -g -o $@ perf.c perf_kernels.c
+$(BUILD_DIR)/perf: src/perf/perf.c src/headers/aarch64.h | $(BUILD_DIR)
+	python3 src/perf/perf_kernels.py $(BUILD_DIR)/perf_kernels.c
+	gcc $(CFLAGS) -o $@ src/perf/perf.c $(BUILD_DIR)/perf_kernels.c
 
 # --- amx_intrinsics_v1_test ---
-$(BUILD_DIR)/amx_intrinsics_v1_test: amx_intrinsics_v1_test.c amx_intrinsics.h amx_backend_aarch64.h aarch64.h | $(BUILD_DIR)
-	gcc -O2 -g -o $@ amx_intrinsics_v1_test.c -lm
+$(BUILD_DIR)/amx_intrinsics_v1_test: \
+		src/test/amx_intrinsics_v1_test.c \
+		src/headers/amx_intrinsics.h \
+		src/headers/amx_backend_aarch64.h \
+		src/headers/aarch64.h \
+		| $(BUILD_DIR)
+	gcc $(CFLAGS) -o $@ src/test/amx_intrinsics_v1_test.c -lm
 
 test_intrinsics_v1: $(BUILD_DIR)/amx_intrinsics_v1_test
 	$<
