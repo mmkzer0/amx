@@ -6,3 +6,4 @@ perf
 perf.dSYM
 perf_kernels.c
 build/
+tmp/
