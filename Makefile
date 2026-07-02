@@ -41,6 +41,20 @@ $(BUILD_DIR)/amx_intrinsics_v1_test: \
 test_intrinsics_v1: $(BUILD_DIR)/amx_intrinsics_v1_test
 	$<
 
+# --- fma32_mat_correctness ---
+$(BUILD_DIR)/fma32_mat_correctness: \
+		src/test/fma32_mat_correctness.c \
+		src/emulate/fma.c \
+		src/headers/amx_intrinsics.h \
+		src/headers/amx_backend_aarch64.h \
+		src/headers/aarch64.h \
+		src/headers/emulate.h \
+		| $(BUILD_DIR)
+	gcc $(CFLAGS) -o $@ src/test/fma32_mat_correctness.c src/emulate/fma.c -lm
+
+test_fma32_mat: $(BUILD_DIR)/fma32_mat_correctness
+	$<
+
 # --- clean ---
 clean:
 	rm -rf $(BUILD_DIR)
@@ -49,4 +63,4 @@ clean:
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-.PHONY: test test_intrinsics_v1 perf clean
+.PHONY: test test_intrinsics_v1 test_fma32_mat perf clean

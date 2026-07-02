@@ -103,12 +103,16 @@ static inline uint64_t amx_intr_fma_like_bits(uint8_t vector_mode, uint8_t z_row
            ((uint64_t)y_off_b & 0x1FFull);
 }
 
+static inline uint64_t amx_intr_fma_mat_bits(uint8_t z_row_mask, uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
+    return amx_intr_fma_like_bits(0u, (uint8_t)(z_row & z_row_mask), x_off_b, y_off_b);
+}
+
 static inline amx_fma16_op_t amx_fma16_op_vec_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
     return (amx_fma16_op_t){amx_intr_fma_like_bits(1u, z_row, x_off_b, y_off_b)};
 }
 
 static inline amx_fma16_op_t amx_fma16_op_mat_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
-    return (amx_fma16_op_t){amx_intr_fma_like_bits(0u, z_row, x_off_b, y_off_b)};
+    return (amx_fma16_op_t){amx_intr_fma_mat_bits(1u, z_row, x_off_b, y_off_b)};
 }
 
 static inline amx_fma32_op_t amx_fma32_op_vec_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
@@ -116,7 +120,7 @@ static inline amx_fma32_op_t amx_fma32_op_vec_acc(uint8_t z_row, uint16_t x_off_
 }
 
 static inline amx_fma32_op_t amx_fma32_op_mat_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
-    return (amx_fma32_op_t){amx_intr_fma_like_bits(0u, z_row, x_off_b, y_off_b)};
+    return (amx_fma32_op_t){amx_intr_fma_mat_bits(3u, z_row, x_off_b, y_off_b)};
 }
 
 static inline amx_fma64_op_t amx_fma64_op_vec_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
@@ -124,7 +128,7 @@ static inline amx_fma64_op_t amx_fma64_op_vec_acc(uint8_t z_row, uint16_t x_off_
 }
 
 static inline amx_fma64_op_t amx_fma64_op_mat_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
-    return (amx_fma64_op_t){amx_intr_fma_like_bits(0u, z_row, x_off_b, y_off_b)};
+    return (amx_fma64_op_t){amx_intr_fma_mat_bits(7u, z_row, x_off_b, y_off_b)};
 }
 
 static inline amx_fms16_op_t amx_fms16_op_vec_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
@@ -132,7 +136,7 @@ static inline amx_fms16_op_t amx_fms16_op_vec_acc(uint8_t z_row, uint16_t x_off_
 }
 
 static inline amx_fms16_op_t amx_fms16_op_mat_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
-    return (amx_fms16_op_t){amx_intr_fma_like_bits(0u, z_row, x_off_b, y_off_b)};
+    return (amx_fms16_op_t){amx_intr_fma_mat_bits(1u, z_row, x_off_b, y_off_b)};
 }
 
 static inline amx_fms32_op_t amx_fms32_op_vec_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
@@ -140,7 +144,7 @@ static inline amx_fms32_op_t amx_fms32_op_vec_acc(uint8_t z_row, uint16_t x_off_
 }
 
 static inline amx_fms32_op_t amx_fms32_op_mat_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
-    return (amx_fms32_op_t){amx_intr_fma_like_bits(0u, z_row, x_off_b, y_off_b)};
+    return (amx_fms32_op_t){amx_intr_fma_mat_bits(3u, z_row, x_off_b, y_off_b)};
 }
 
 static inline amx_fms64_op_t amx_fms64_op_vec_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
@@ -148,7 +152,7 @@ static inline amx_fms64_op_t amx_fms64_op_vec_acc(uint8_t z_row, uint16_t x_off_
 }
 
 static inline amx_fms64_op_t amx_fms64_op_mat_acc(uint8_t z_row, uint16_t x_off_b, uint16_t y_off_b) {
-    return (amx_fms64_op_t){amx_intr_fma_like_bits(0u, z_row, x_off_b, y_off_b)};
+    return (amx_fms64_op_t){amx_intr_fma_mat_bits(7u, z_row, x_off_b, y_off_b)};
 }
 
 static inline void amx_ldx(amx_ldx_op_t op) { amx_backend_ldx(op.bits); }

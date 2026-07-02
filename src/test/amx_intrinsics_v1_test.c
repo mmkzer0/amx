@@ -86,7 +86,7 @@ static void test_operand_builders(void) {
     assert(fms64v.bits == ((1ull << 63) | (9ull << 20) | (88ull << 10) | 77ull));
 
     amx_fms16_op_t fms16m = amx_fms16_op_mat_acc(7, 1, 2);
-    assert(fms16m.bits == ((7ull << 20) | (1ull << 10) | 2ull));
+    assert(fms16m.bits == ((1ull << 20) | (1ull << 10) | 2ull));
 }
 
 /* ─── correctness: FMA32 vector mode ──────────────────────────────────────── */
