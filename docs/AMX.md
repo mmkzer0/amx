@@ -60,7 +60,7 @@ make test_intrinsics_v1
 make test_mat          # fma16/f32/f64 matrix gold vs emulate
 ```
 
-Matrix gold tests: smoke, `z_base`, accumulation, builder mask, 100-seed HW vs `emulate_AMX_FMA*`.
+Matrix gold tests: smoke, `z_base`, accumulation, builder mask, 100-seed HW vs `emulate_AMX_FMA*` / `emulate_AMX_FMS*` for f16/f32/f64.
 
 ## What v1 does not cover
 

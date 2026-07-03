@@ -8,15 +8,15 @@
 - Scope guards, typed FMA/FMS f16/f32/f64 vec+mat builders
 - ld/st single-row operands
 - Vector correctness (`amx_intrinsics_v1_test.c`)
-- Matrix gold f16/f32/f64 (`amx_mat_correctness.c`)
+- Matrix gold f16/f32/f64 FMA + FMS (`amx_mat_correctness.c`)
 
 ## Next (when needed by consumers)
 
 | Priority | Item | Notes |
 |----------|------|-------|
 | P1 | `amx_ldz` / `amx_stz` multi-row panel helpers | Only with correctness tests per width |
-| P2 | FMS matrix gold tests | Mirror FMA mat coverage |
-| P3 | `vecfp` / `matfp` wrappers | After FMA family stable |
+| P2 | FMS matrix gold tests | **done** |
+| P3 | `vecfp` / `matfp` wrappers | After FMA/FMS family stable |
 
 ## Deferred (no v1 work without explicit ask)
 

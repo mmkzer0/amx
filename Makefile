@@ -45,12 +45,13 @@ test_intrinsics_v1: $(BUILD_DIR)/amx_intrinsics_v1_test
 $(BUILD_DIR)/amx_mat_correctness: \
 		src/test/amx_mat_correctness.c \
 		src/emulate/fma.c \
+		src/emulate/fms.c \
 		src/headers/amx_intrinsics.h \
 		src/headers/amx_backend_aarch64.h \
 		src/headers/aarch64.h \
 		src/headers/emulate.h \
 		| $(BUILD_DIR)
-	gcc $(CFLAGS) -o $@ src/test/amx_mat_correctness.c src/emulate/fma.c -lm
+	gcc $(CFLAGS) -o $@ src/test/amx_mat_correctness.c src/emulate/fma.c src/emulate/fms.c -lm
 
 test_mat: $(BUILD_DIR)/amx_mat_correctness
 	$<
